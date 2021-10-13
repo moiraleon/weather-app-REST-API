@@ -7,32 +7,32 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_getCityID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
-        app:layout_constraintEnd_toStartOf="@id/button2"
+        app:layout_constraintEnd_toStartOf="@id/btn_getWeatherByCityID"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="26dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btn_getWeatherByCityID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
-        app:layout_constraintStart_toEndOf="@id/button"
-        app:layout_constraintEnd_toStartOf="@id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@id/btn_getCityID"
+        app:layout_constraintEnd_toStartOf="@id/btn_GetWeatherByCityName"
+        app:layout_constraintTop_toTopOf="@+id/btn_getCityID"
         tools:layout_editor_absoluteX="163dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_GetWeatherByCityName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button2"
-        app:layout_constraintTop_toTopOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@id/btn_getWeatherByCityID"
+        app:layout_constraintTop_toTopOf="@+id/btn_getWeatherByCityID"
         tools:layout_editor_absoluteX="292dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
