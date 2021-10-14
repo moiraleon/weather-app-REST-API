@@ -18,6 +18,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_cityID, btn_getWeatherByID, btn_getWeatherByName;
@@ -47,7 +49,17 @@ public class MainActivity extends AppCompatActivity {
                 JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,url,null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Toast.makeText(MainActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+                        String cityID = "";
+                        //get specific parts of the JSONObject Array
+                        //specifying in the array to grab the first Object by stating index of 0
+                        //then specifying which key value to grab based on its key
+                        try {
+                            JSONObject cityInfo = response.getJSONObject(0);
+                            cityID = cityInfo.getString("woeid"); //stating that if this string name exists grab the value
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(MainActivity.this, "City ID = "+ cityID, Toast.LENGTH_SHORT).show();
 
                     }
                 }, new Response.ErrorListener() {
