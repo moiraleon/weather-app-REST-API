@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+                MySingleton.getInstance(MainActivity.this).addToRequestQueue(request );
 
 // Request a string response from the provided URL.
 //                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
