@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_cityID, btn_getWeatherByID, btn_getWeatherByName;
     EditText et_dataInput;
     ListView lv_weatherReport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,36 +39,31 @@ public class MainActivity extends AppCompatActivity {
         et_dataInput = findViewById(R.id.et_dataInput);
         lv_weatherReport =findViewById(R.id.lv_weatherReports);
 
+       final WeatherDataService weatherDataService = new WeatherDataService(MainActivity.this);
+
         //click listeners for each button
 
         btn_cityID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url ="https://www.metaweather.com/api/location/search/?query="+ et_dataInput.getText().toString();//adding the value from  our data input to the url
-                JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,url,null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        String cityID = "";
-                        //get specific parts of the JSONObject Array
-                        //specifying in the array to grab the first Object by stating index of 0
-                        //then specifying which key value to grab based on its key
-                        try {
-                            JSONObject cityInfo = response.getJSONObject(0);
-                            cityID = cityInfo.getString("woeid"); //stating that if this string name exists grab the value
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Toast.makeText(MainActivity.this, "City ID = "+ cityID, Toast.LENGTH_SHORT).show();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                MySingleton.getInstance(MainActivity.this).addToRequestQueue(request );
+
+            //not returning anything
+             weatherDataService.getCityID(et_dataInput.getText().toString(), new WeatherDataService.VolleyResponseListener() {
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(MainActivity.this, "Error" , Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onResponse(String cityID) {
+                    Toast.makeText(MainActivity.this, "Returned an ID of = "+cityID , Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+
+
             }
         });
         btn_getWeatherByID.setOnClickListener(new View.OnClickListener() {
