@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_cityID, btn_getWeatherByID, btn_getWeatherByName;
@@ -65,15 +68,18 @@ public class MainActivity extends AppCompatActivity {
         btn_getWeatherByID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weatherDataService.getCityForecastByID(et_dataInput.getText().toString(),  new WeatherDataService.ForeCastByIDResponse(){
+                weatherDataService.getCityForecastByID(et_dataInput.getText().toString(),  new  WeatherDataService.ForeCastByIDResponse(){
                     @Override
                     public void onError(String message){
                         Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
 
                     }
                     @Override
-                    public void onResponse(WeatherReportModel weatherReportModel){
-                        Toast.makeText(MainActivity.this, weatherReportModel.toString(), Toast.LENGTH_SHORT).show();
+                    public void onResponse(List<WeatherReportModel> weatherReportModels){
+                        //put the list into the list view controller
+                        ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
+                        lv_weatherReport.setAdapter(arrayAdapter);
+
                     }
                 });
 
