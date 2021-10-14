@@ -47,7 +47,7 @@ public class WeatherDataService {
                 //then specifying which key value to grab based on its key
                 try {
                     JSONObject cityInfo = response.getJSONObject(0);
-                    cityID = cityInfo.getString("woeid"); //stating that if this string n ame exists grab the value
+                    cityID = cityInfo.getString("woeid"); //stating that if this string n  ame exists grab the value
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -72,7 +72,7 @@ public class WeatherDataService {
         void onError(String message);
 
         void onResponse(List<WeatherReportModel> weatherReportModels);
-    } 
+    }
 
     public void getCityForecastByID(String cityID, ForeCastByIDResponse foreCastByIDResponse){
         List<WeatherReportModel> weatherReportModels = new ArrayList<>();
@@ -91,9 +91,11 @@ public class WeatherDataService {
                 try {
                     JSONArray consolidated_weather_list = response.getJSONArray("consolidated_weather"); //this is where we tell it what to grab based on the key
                     //get the first item in the array
-                    WeatherReportModel one_day_weather = new WeatherReportModel();
+                   // WeatherReportModel one_day_weather = new WeatherReportModel();
 
                     for (int i =0; i < consolidated_weather_list.length(); i++) {
+                        WeatherReportModel one_day_weather = new WeatherReportModel();
+
                         JSONObject first_day_from_api = (JSONObject) consolidated_weather_list.get(i);
                         one_day_weather.setId(first_day_from_api.getInt("id")); //assigning an id to this new instance and telling it where to find it by the key id
                         one_day_weather.setWeather_state_name(first_day_from_api.getString("weather_state_name"));
