@@ -1,7 +1,6 @@
 package com.example.weatherapiapp;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -14,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WeatherDataService {
@@ -140,9 +138,49 @@ public class WeatherDataService {
         MySingleton.getInstance(context).addToRequestQueue(request );
 
     }
-//    public List<WeatherReportModel> getCityForecastByName(String cityName){
-//
-//    }
+
+
+    public interface getCityForeCastByNameCallback {
+        void onError( String message);
+        void onResponse(List<WeatherReportModel> weatherReportModels);
+    }
+
+
+    public void getCityForecastByName(String cityName, getCityForeCastByNameCallback getCityForeCastByNameCallback){
+
+        //fetch the city id given the name
+
+        getCityID(cityName, new VolleyResponseListener() {
+            @Override
+            public void onError(String message) {
+                
+            }
+
+            @Override
+            public void onResponse(String cityID) {
+                
+                //this now  has the city id
+
+                getCityForecastByID(cityID, new ForeCastByIDResponse() {
+                    @Override
+                    public void onError(String message) {
+
+                    }
+
+                    @Override
+                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                        //we have the weather report
+                        getCityForeCastByNameCallback.onResponse(weatherReportModels );
+
+                    }
+                });
+
+            }
+        });
+
+        //fetch the city forecast given the id
+
+    }
 
 
 }
